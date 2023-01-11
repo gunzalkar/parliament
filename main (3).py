@@ -62,7 +62,9 @@ if __name__ == "__main__":
                    driver.find_element(by=By.XPATH, value=filename).get_attribute('innerText'),
                    driver.find_element(by=By.XPATH, value=file_size).get_attribute('innerText')]
             print(row)
+            print(j)
             data.append(row)
+            time.sleep(.5)
             response = req.urlopen(driver.find_element(by=By.XPATH, value=file_link).get_attribute('href'))
             file = open(f"{driver.find_element(by=By.XPATH, value=filename).get_attribute('innerText')}", "wb")
             file.write(response.read())
@@ -85,5 +87,7 @@ if __name__ == "__main__":
                     df = pd.DataFrame(data, columns=header)
                     df.to_csv(f"Result-{i}.csv", index=False, mode='a+')
                 data = []
-        driver.back()
+        df = pd.DataFrame(data)
+        df.to_csv(f"Result-{i}.csv", index=False, mode='a+', header=False)
+        driver.get("https://eparlib.nic.in/handle/123456789/796090/browse?page-token=207d0e1f9bbc&page-token-value=36cf3ef399f0aadcbd18c480ec1d23e1&type=loksabhanumber&submit_browse=Lok+Sabha+Number")
 
